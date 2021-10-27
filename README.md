@@ -1,39 +1,42 @@
-# MP-celery
 
-Django celery app.
+### Auto integration of celery and celery beat
 
-### Installation
+Installation:
 
-Install with pip:
-
-```
-pip install django-mp-celery
-```
-
-core/\_\_init\_\_.py
-``` 
-from core.celery_app import celery_app
+1)  Add `django-mp-celery` to `requirements.txt`
  
+
+2) Add `celerybeat-schedule` to `.gitignore` file
+
  
+3) Add next code to `core/__init__.py`
+
+``` python
+from mpcelery.app import celery_app
+
+
 __all__ = ['celery_app']
+
+
+# this code is optional 
+celery_app.conf.beat_schedule = {
+    {
+        'task-name': {
+            'task': 'path.to.task_method',
+            'schedule': 5  # each 5 seconds
+        }
+    }
+}
 ```
 
-core/celery_app.py
+4) 
+IF you have `django-mp-basement` installed
+* Add `mpcelery` to `settings_factory` 
 
-```
-import cbsettings
- 
-from celery import Celery
- 
- 
-cbsettings.configure('core.settings.Settings')
- 
-celery_app = Celery('core')
-celery_app.config_from_object('django.conf:settings', namespace='CELERY')
-celery_app.autodiscover_tasks()
-```
+else:
+* add `django_celery_beat` to `INSTALLED_APPS`
+* add `CELERY_BROKER_URL = "redis://0.0.0.0:6379/0"`
 
-core/common_settings.py
-```
-from mpcelery.settings import CelerySettings
-```
+Run tasks:
+* `celery -A core worker -l INFO`
+* `celery -A core beat -l INFO`
