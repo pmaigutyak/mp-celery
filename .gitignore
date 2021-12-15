@@ -16,3 +16,4 @@ static-collect
 debug.log
 dist
 django_mp_celery.egg-info
+build
