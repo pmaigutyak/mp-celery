@@ -30,12 +30,8 @@ celery_app.conf.beat_schedule = {
 ```
 
 4) 
-IF you have `django-mp-basement` installed
-* Add `mpcelery` to `settings_factory` 
-
-else:
-* add `django_celery_beat` to `INSTALLED_APPS`
-* add `CELERY_BROKER_URL = "redis://0.0.0.0:6379/0"`
+* install `djrunner` (https://github.com/pmaigutyak/djrunner)
+* add `mpcelery` to `INSTALLED_APPS`
 
 Run tasks:
 * `celery -A core worker -l INFO`
