@@ -33,6 +33,8 @@ celery_app.conf.beat_schedule = {
 * install `djrunner` (https://github.com/pmaigutyak/djrunner)
 * add `mpcelery` to `INSTALLED_APPS`
 
+5) Install redis server (https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04-ru)
+
 Run tasks:
 * `celery -A core worker -l INFO`
 * `celery -A core beat -l INFO`
